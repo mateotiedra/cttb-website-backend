@@ -1,9 +1,13 @@
 const config = require('../config/auth.config');
 const db = require('../models/db.model');
-const { unexpectedErrorCatch } = require('../helpers/errorCatch.helper');
+const {
+  unexpectedErrorCatch,
+  uniqueAttributeErrorCatch,
+} = require('../helpers/errorCatch.helper');
 const mailController = require('../controllers/mail.controller');
 
 const Event = db.event;
+const Registration = db.registration;
 const Op = db.Sequelize.Op;
 
 // Create a new event (admin only)
@@ -18,15 +22,25 @@ const newEvent = (req, res) => {
     .then(() => {
       res.status(200).send({ message: 'Event created' });
     })
-    .catch(unexpectedErrorCatch(res));
+    .catch(uniqueAttributeErrorCatch(res, unexpectedErrorCatch(res)));
 };
 
-// Add a new registrant to an even
-const newRegistrant = (req, res) => {
-  res.status(200).send({ message: 'Registration created' });
+// Add a new registration to an even
+const newRegistration = (req, res) => {
+  Registration.create({
+    eventId: req.body.eventId,
+    email: req.body.email,
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
+    registrationData: req.body.registrationData,
+  })
+    .then(() => {
+      res.status(200).send({ message: 'Registration created' });
+    })
+    .catch(unexpectedErrorCatch(res));
 };
 
 module.exports = {
   newEvent,
-  newRegistrant,
+  newRegistration,
 };

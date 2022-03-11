@@ -19,16 +19,16 @@ module.exports = function (app) {
 
   // Register someone to an event
   app.post(
-    'event/register',
+    '/event/register',
     [
       verifyRequestBody([
-        'eventName',
+        'eventId',
         'email',
         'firstName',
         'lastName',
         'registrationData',
       ]),
     ],
-    controller.newRegistrant
+    controller.newRegistration
   );
 };

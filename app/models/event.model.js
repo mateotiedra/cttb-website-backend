@@ -22,7 +22,7 @@ module.exports = (sequelize, DataTypes) => {
   const Event = sequelize.define('event', attributes);
 
   Event.associate = (models) => {
-    Event.hasMany(models.registrant, {
+    Event.hasMany(models.registration, {
       as: 'eventId',
       foreignKey: {
         name: 'id',
