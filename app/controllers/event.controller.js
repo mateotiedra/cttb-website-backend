@@ -25,6 +25,11 @@ const newEvent = (req, res) => {
     .catch(uniqueAttributeErrorCatch(res, unexpectedErrorCatch(res)));
 };
 
+// Get event infos
+const getEventBoard = (req, res) => {
+  return res.status(200).send(req.event.dataValues);
+};
+
 // Add a new registration to an even
 const newRegistration = (req, res) => {
   Registration.create({
@@ -42,5 +47,6 @@ const newRegistration = (req, res) => {
 
 module.exports = {
   newEvent,
+  getEventBoard,
   newRegistration,
 };
