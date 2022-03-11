@@ -20,6 +20,11 @@ db.sequelize = sequelize;
 db.Op = Sequelize.Op;
 
 db.user = require('./user.model.js')(sequelize, Sequelize);
+db.event = require('./event.model.js')(sequelize, Sequelize);
+db.registrant = require('./registrant.model.js')(sequelize, Sequelize);
+
+db.event.associate(db);
+db.registrant.associate(db);
 /*db.bid = require('./bid.model.js')(sequelize, Sequelize);
 
 db.user.associate(db);
