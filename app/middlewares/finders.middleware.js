@@ -13,11 +13,11 @@ const Event = db.event;
 
 const findObjectByAttribute =
   (DefinedObject, definedObjectName) => (attribute) => (req, res, next) => {
-    const attributeInBody = Object.keys(req.body).length != 0;
+    const attributeInQueryParams = req.method === 'GET';
     if (
-      (req.method !== 'GET' &&
+      (!attributeInQueryParams &&
         verifyRequestBody([attribute])(req, res, () => {})) ||
-      (req.method === 'GET' &&
+      (attributeInQueryParams === 'GET' &&
         verifyQueryParams([attribute])(req, res, () => {}))
     ) {
       return;
@@ -25,9 +25,9 @@ const findObjectByAttribute =
 
     DefinedObject.findOne({
       where: {
-        [attribute]: attributeInBody
-          ? req.body[attribute]
-          : req.query[attribute],
+        [attribute]: attributeInQueryParams
+          ? req.query[attribute]
+          : req.body[attribute],
       },
     })
       .then((definedObject) => {
