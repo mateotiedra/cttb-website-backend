@@ -70,7 +70,7 @@ const findUser = (attribute) => (req, res, next) => {
     },
   })
     .then((user) => {
-      if (!user) return objectNotFoundRes(res, User);
+      if (!user) return objectNotFoundRes(res, 'User');
       req.user = user;
       next();
     })

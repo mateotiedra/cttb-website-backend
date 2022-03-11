@@ -1,14 +1,18 @@
-const { verifyRequestBody } = require('../middlewares/request.middleware');
+const {
+  verifyRequestBody,
+  verifyQueryParams,
+} = require('../middlewares/request.middleware');
 const controller = require('../controllers/event.controller');
 const {
   verifyAccessToken,
   verifyRole,
 } = require('../middlewares/user.middleware');
+const { findEventByAttribute } = require('../middlewares/finders.middleware');
 
 module.exports = function (app) {
   // Create a new event
   app.post(
-    '/event/new',
+    '/event',
     [
       verifyRequestBody(['id', 'name']),
       verifyAccessToken,
@@ -16,6 +20,8 @@ module.exports = function (app) {
     ],
     controller.newEvent
   );
+
+  app.get('/event', [findEventByAttribute('id')], controller.getEventBoard);
 
   // Register someone to an event
   app.post(
