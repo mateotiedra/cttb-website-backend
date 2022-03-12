@@ -21,7 +21,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    registrationData: DataTypes.STRING,
+    registrationData: DataTypes.JSON,
   };
 
   const Registration = sequelize.define('registration', attributes);
