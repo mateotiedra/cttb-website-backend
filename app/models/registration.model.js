@@ -28,9 +28,8 @@ module.exports = (sequelize, DataTypes) => {
 
   Registration.associate = (models) => {
     Registration.belongsTo(models.event, {
-      as: 'eventId',
       foreignKey: {
-        name: 'id',
+        name: 'eventId',
         allowNull: false,
       },
       onDelete: 'cascade',

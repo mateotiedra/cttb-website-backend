@@ -23,9 +23,8 @@ module.exports = (sequelize, DataTypes) => {
 
   Event.associate = (models) => {
     Event.hasMany(models.registration, {
-      as: 'eventId',
       foreignKey: {
-        name: 'id',
+        name: 'eventId',
         allowNull: false,
       },
       onDelete: 'cascade',

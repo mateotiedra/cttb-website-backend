@@ -1,7 +1,4 @@
-const {
-  verifyRequestBody,
-  verifyQueryParams,
-} = require('../middlewares/request.middleware');
+const { verifyRequestBody } = require('../middlewares/request.middleware');
 const controller = require('../controllers/event.controller');
 const {
   verifyAccessToken,
