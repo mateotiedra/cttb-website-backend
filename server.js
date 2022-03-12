@@ -5,14 +5,14 @@ const bodyParser = require('body-parser');
 
 const app = express();
 
-/*const cors = require('cors');
+const cors = require('cors');
 var corsOptions = {
   origin: process.env.APP_ORIGIN,
   methods: ['GET', 'POST', 'DELETE'],
   credentials: true,
 };
 
-app.use(cors(corsOptions)); */
+app.use(cors(corsOptions));
 
 // Use express-rate-limit to prevent too many requests
 const rateLimit = require('express-rate-limit');

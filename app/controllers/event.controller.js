@@ -20,14 +20,14 @@ const newEvent = (req, res) => {
     pdf: req.body.pdf,
   })
     .then(() => {
-      res.status(200).send({ message: 'Event created' });
+      res.status(200).json({ message: 'Event created' });
     })
     .catch(uniqueAttributeErrorCatch(res, unexpectedErrorCatch(res)));
 };
 
 // Get event infos
 const getEventBoard = (req, res) => {
-  return res.status(200).send(req.event.dataValues);
+  return res.status(200).json(req.event.dataValues);
 };
 
 // Add a new registration to an even
@@ -40,7 +40,7 @@ const newRegistration = (req, res) => {
     registrationData: req.body.registrationData,
   })
     .then(() => {
-      res.status(200).send({ message: 'Registration created' });
+      res.status(200).json({ message: 'Registration created' });
     })
     .catch(unexpectedErrorCatch(res));
 };

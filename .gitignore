@@ -52,6 +52,7 @@ typings/
 
 # The .env
 .env
+.env.local
 
 # Optional eslint cache
 .eslintcache

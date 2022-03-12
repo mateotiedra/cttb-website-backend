@@ -11,14 +11,14 @@ const User = db.user;
 const verifyAccessToken = (req, res, next) => {
   let token = req.headers['x-access-token'];
   if (!token) {
-    return res.status(401).send({
+    return res.status(401).json({
       message: 'No token provided!',
     });
   }
 
   jwt.verify(token, config.secret, (err, decoded) => {
     if (err) {
-      return res.status(401).send({
+      return res.status(401).json({
         message: 'Unauthorized!',
       });
     }
@@ -39,7 +39,7 @@ const verifyAccessToken = (req, res, next) => {
 
 const verifyStatus = (allowedStatus) => (req, res, next) => {
   if (!allowedStatus.includes(req.user.status))
-    return res.status(403).send({
+    return res.status(403).json({
       message:
         'The user is not allowed here, actual status : ' + req.user.status,
     });
@@ -49,7 +49,7 @@ const verifyStatus = (allowedStatus) => (req, res, next) => {
 
 const verifyRole = (allowedRoles) => (req, res, next) => {
   if (!allowedRoles.includes(req.user.role))
-    return res.status(403).send({
+    return res.status(403).json({
       message: 'The user is not allowed here, user role : ' + req.user.role,
     });
 
@@ -65,10 +65,10 @@ const validEmailToken = (req, res, next) => {
   })
     .then((user) => {
       if (!user)
-        return res.status(404).send({ message: 'Email token does not exist' });
+        return res.status(404).json({ message: 'Email token does not exist' });
 
       if (Date.now() - user.emailTokenGeneratedAt > 10 * 60 * 1000)
-        return res.status(410).send({
+        return res.status(410).json({
           message: 'Email token expired (+5 minutes) or already used',
         });
 

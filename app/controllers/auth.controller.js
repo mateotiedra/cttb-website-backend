@@ -35,7 +35,7 @@ const signUp = (req, res) => {
             email: user.email,
             emailToken: user.emailToken,
             success: () => {
-              res.status(201).send({
+              res.status(201).json({
                 message:
                   'User registered successfully! Please check your email',
               });
@@ -58,13 +58,13 @@ const signIn = (req, res) => {
       return bcrypt.compare(req.body.password, user.password, (err, same) => {
         if (same) {
           if (user.status != 'active')
-            return res.status(202).send({ message: 'Mail not confirmed yet' });
+            return res.status(202).json({ message: 'Mail not confirmed yet' });
 
-          return res.status(200).send({
+          return res.status(200).json({
             accessToken: jwt.sign({ uuid: user.uuid }, config.secret),
           });
         }
-        return res.status(403).send({
+        return res.status(403).json({
           message: 'Wrong email/password combination',
         });
       });
@@ -77,7 +77,7 @@ const sendEmailToken =
   (req, res) => {
     const user = req.user;
     if (Date.now() - user.emailTokenGeneratedAt < 3 * 60 * 1000)
-      return res.status(409).send({
+      return res.status(409).json({
         message: 'Wait before sending a new email',
       });
     crypto.randomBytes(16, (err, buf) => {
@@ -90,7 +90,7 @@ const sendEmailToken =
           success: () => {
             return res
               .status(202)
-              .send({ message: emailType + ' email sent!' });
+              .json({ message: emailType + ' email sent!' });
           },
         };
         emailType === 'confirmation'
@@ -107,7 +107,7 @@ const confirmEmail = (req, res) => {
   user
     .save()
     .then(() => {
-      res.status(200).send({
+      res.status(200).json({
         accessToken: jwt.sign({ uuid: user.uuid }, config.secret),
       });
     })
@@ -117,13 +117,13 @@ const confirmEmail = (req, res) => {
 // Sign in the user if he forgot the password in order to change it -> send the access token
 const recover = (req, res) => {
   const user = req.user;
-  res.status(200).send({
+  res.status(200).json({
     accessToken: jwt.sign({ uuid: user.uuid }, config.secret),
   });
 };
 
 const getUserBoard = (req, res) => {
-  return res.status(200).send({ email: req.user.email });
+  return res.status(200).json({ email: req.user.email });
 };
 
 module.exports = {
