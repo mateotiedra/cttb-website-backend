@@ -12,7 +12,6 @@ module.exports = (sequelize, DataTypes) => {
     },
     registrationOpened: {
       type: DataTypes.BOOLEAN,
-      allowNull: false,
       defaultValue: false,
     },
     description: DataTypes.STRING,
