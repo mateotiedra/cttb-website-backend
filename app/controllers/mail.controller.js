@@ -33,7 +33,7 @@ const sendRegistrationConfirmation = (
 
 const sendConfirmation = (params) => {
   const emailData = {
-    from: from,
+    from: user,
     to: params.email,
     subject: 'Lien de confirmation',
     html: `<h1>Vérification de l'adresse email</h1>
@@ -57,7 +57,7 @@ const sendConfirmation = (params) => {
 
 const sendResetPassword = (params) => {
   const emailData = {
-    from: from,
+    from: user,
     to: params.email,
     subject: 'Mot de passe oublié',
     html: `<h1>Nouveau mot de passe</h1>

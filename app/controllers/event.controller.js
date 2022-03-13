@@ -18,6 +18,7 @@ const newEvent = (req, res) => {
     registrationOpened: req.body.registrationOpened,
     description: req.body.description,
     pdf: req.body.pdf,
+    confirmationMessage: req.body.confirmationMessage,
   })
     .then(() => {
       res.status(200).json({ message: 'Event created' });
@@ -45,7 +46,7 @@ const newRegistration = (req, res) => {
           email: req.body.email,
           registrantName: req.body.firstName + ' ' + req.body.lastName,
           eventName: req.event.name,
-          eventConfMessage: req.event.confMessage,
+          eventConfMessage: req.event.confirmationMessage,
         },
         () => {
           res.status(200).json({ message: 'Registration created' });

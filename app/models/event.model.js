@@ -16,6 +16,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     description: DataTypes.STRING,
     pdf: DataTypes.BLOB,
+    confirmationMessage: DataTypes.STRING,
   };
 
   const Event = sequelize.define('event', attributes);
