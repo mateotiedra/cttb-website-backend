@@ -31,6 +31,7 @@ module.exports = function (app) {
         'lastName',
         'registrationData',
       ]),
+      findEventByAttribute('id', 'eventId'),
     ],
     controller.newRegistration
   );

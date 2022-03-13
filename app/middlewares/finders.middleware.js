@@ -34,7 +34,7 @@ const findObjectByAttribute =
       },
     })
       .then((definedObject) => {
-        if (!definedObject) return objectNotFoundRes(res, 'Object');
+        if (!definedObject) return objectNotFoundRes(res, definedObjectName);
         req[definedObjectName] = definedObject;
         next();
       })

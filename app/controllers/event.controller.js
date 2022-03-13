@@ -40,7 +40,17 @@ const newRegistration = (req, res) => {
     registrationData: req.body.registrationData,
   })
     .then(() => {
-      res.status(200).json({ message: 'Registration created' });
+      mailController.sendRegistrationConfirmation(
+        {
+          email: req.body.email,
+          registrantName: req.body.firstName + ' ' + req.body.lastName,
+          eventName: req.event.name,
+          eventConfMessage: req.event.confMessage,
+        },
+        () => {
+          res.status(200).json({ message: 'Registration created' });
+        }
+      );
     })
     .catch(unexpectedErrorCatch(res));
 };

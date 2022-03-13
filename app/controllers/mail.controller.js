@@ -1,8 +1,35 @@
 const config = require('../config/email.config');
+const nodemailer = require('nodemailer');
 
-const from = `${
-  config.WEBSITE_NAME
-} <no-reply@${config.WEBSITE_NAME.toLocaleLowerCase()}.ch>`;
+const user = config.USER;
+
+const transport = nodemailer.createTransport({
+  host: config.HOST,
+  secure: false,
+  port: 587,
+  direct: true,
+  //encryption: 'smarttns',
+  auth: {
+    user: user,
+    pass: config.PASSWORD,
+  },
+});
+
+const sendRegistrationConfirmation = (
+  { email, eventName, registrantName, eventConfMessage = '' },
+  success
+) => {
+  transport
+    .sendMail({
+      from: user,
+      to: email,
+      subject: 'Inscription ' + eventName.toLowerCase(),
+      html: `<p>Nous confirmons que <b>${registrantName}</b> s'est bien inscrit à l'évenement suivant : <b>${eventName}</b>.</p>
+      </br>${eventConfMessage}`,
+    })
+    .then(success)
+    .catch((err) => console.log(err));
+};
 
 const sendConfirmation = (params) => {
   const emailData = {
@@ -50,4 +77,8 @@ const sendResetPassword = (params) => {
   params.success();
 };
 
-module.exports = { sendConfirmation, sendResetPassword };
+module.exports = {
+  sendConfirmation,
+  sendResetPassword,
+  sendRegistrationConfirmation,
+};
