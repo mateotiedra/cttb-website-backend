@@ -31,16 +31,18 @@ const signUp = (req, res) => {
         emailTokenGeneratedAt: Date.now(),
       })
         .then((user) => {
-          return mailController.sendConfirmation({
-            email: user.email,
-            emailToken: user.emailToken,
-            success: () => {
+          mailController
+            .sendAccountConfirmation({
+              email: user.email,
+              name: user.firstName,
+              emailToken: user.emailToken,
+            })
+            .then(() => {
               res.status(201).json({
                 message:
                   'User registered successfully! Please check your email',
               });
-            },
-          });
+            });
         })
         .catch(uniqueAttributeErrorCatch(res, unexpectedErrorCatch));
     });
@@ -87,15 +89,14 @@ const sendEmailToken =
         const options = {
           email: user.email,
           emailToken: user.emailToken,
-          success: () => {
-            return res
-              .status(202)
-              .json({ message: emailType + ' email sent!' });
-          },
         };
-        emailType === 'confirmation'
-          ? mailController.sendConfirmation(options)
-          : mailController.sendResetPassword(options);
+
+        (emailType === 'confirmation'
+          ? mailController.sendAccountConfirmation(options)
+          : mailController.sendResetPassword(options)
+        ).then(() => {
+          return res.status(202).json({ message: emailType + ' email sent!' });
+        });
       });
     });
   };

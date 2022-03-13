@@ -33,6 +33,7 @@ const getEventBoard = (req, res) => {
 
 // Add a new registration to an even
 const newRegistration = (req, res) => {
+  const registrantName = req.body.firstName + ' ' + req.body.lastName;
   Registration.create({
     eventId: req.body.eventId,
     email: req.body.email,
@@ -41,17 +42,29 @@ const newRegistration = (req, res) => {
     registrationData: req.body.registrationData,
   })
     .then(() => {
-      mailController.sendRegistrationConfirmation(
-        {
+      mailController
+        .sendRegistrationConfirmation({
           email: req.body.email,
-          registrantName: req.body.firstName + ' ' + req.body.lastName,
+          registrantName,
           eventName: req.event.name,
           eventConfMessage: req.event.confirmationMessage,
-        },
-        () => {
-          res.status(200).json({ message: 'Registration created' });
-        }
-      );
+        })
+        .then(() => {
+          if (req.event.notifiedEmail) {
+            return mailController
+              .sendRegistrationNotification({
+                notifiedEmail: req.event.notifiedEmail,
+                eventName: req.event.name,
+                registrantName,
+              })
+              .then(() => {
+                res.status(200).json({ message: 'Registration created' });
+              })
+              .catch(unexpectedErrorCatch(res));
+          }
+          return res.status(200).json({ message: 'Registration created' });
+        })
+        .catch(unexpectedErrorCatch(res));
     })
     .catch(unexpectedErrorCatch(res));
 };
