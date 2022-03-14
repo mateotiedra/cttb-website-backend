@@ -74,8 +74,6 @@ const signIn = (req, res) => {
     .catch(unexpectedErrorCatch(res));
 };
 
-// Test
-
 const sendEmailToken =
   (emailType = 'confirmation') =>
   (req, res) => {
