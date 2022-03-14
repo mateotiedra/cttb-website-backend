@@ -39,14 +39,40 @@ const sendRegistrationNotification = ({
   notifiedEmail,
   eventName,
   registrantName,
+  registration,
 }) =>
   new Promise((resolve, reject) => {
+    var eventData = {
+      ...registration,
+      ...registration.registrationData,
+    };
+
+    let eventDataHtml = '';
+
+    const keysToDelete = [
+      'uuid',
+      'status',
+      'eventId',
+      'registrationData',
+      'updatedAt',
+      'createdAt',
+    ];
+
+    for (const key in eventData) {
+      if (
+        eventData[key] &&
+        eventData[key] !== '' &&
+        !keysToDelete.includes(key)
+      )
+        eventDataHtml += `<li><b>${key}</b> : ${eventData[key]}</li>`;
+    }
+
     transport
       .sendMail({
         from: user,
         to: notifiedEmail,
         subject: 'Nouvelle inscription : ' + eventName.toLowerCase(),
-        html: `<p><b>${registrantName}</b> s'est inscrit à l'évenement suivant : <b>${eventName}</b>.</p>`,
+        html: `<p><b>${registrantName}</b> s'est inscrit à l'évenement suivant : <b>${eventName}</b>.</p></br><ul>${eventDataHtml}</ul>`,
       })
       .then(resolve)
       .catch(reject);

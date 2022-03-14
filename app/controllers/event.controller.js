@@ -19,6 +19,7 @@ const newEvent = (req, res) => {
     description: req.body.description,
     pdf: req.body.pdf,
     confirmationMessage: req.body.confirmationMessage,
+    notifiedEmail: req.body.notifiedEmail,
   })
     .then(() => {
       res.status(200).json({ message: 'Event created' });
@@ -41,7 +42,7 @@ const newRegistration = (req, res) => {
     lastName: req.body.lastName,
     registrationData: req.body.registrationData,
   })
-    .then(() => {
+    .then((registration) => {
       mailController
         .sendRegistrationConfirmation({
           email: req.body.email,
@@ -56,6 +57,7 @@ const newRegistration = (req, res) => {
                 notifiedEmail: req.event.notifiedEmail,
                 eventName: req.event.name,
                 registrantName,
+                registration: registration.dataValues,
               })
               .then(() => {
                 res.status(200).json({ message: 'Registration created' });
