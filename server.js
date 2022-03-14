@@ -7,7 +7,7 @@ const app = express();
 
 const cors = require('cors');
 
-var whitelist = ['https://cttbernex.ch', 'http://cttbernex.ch/'];
+var whitelist = ['https://cttbernex.ch', 'http://cttbernex.ch'];
 
 if (!process.env.PRODUCTION === 'false') {
   whitelist.push('http://localhost:3000');
