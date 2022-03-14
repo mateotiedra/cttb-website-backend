@@ -1,7 +1,10 @@
 const config = require('../config/db.config.js');
 
 const Sequelize = require('sequelize');
-const sequelize = new Sequelize(config.DB, config.USER, config.PASSWORD, {
+const sequelize = new Sequelize(config.DB_CONNECTION_URL, {
+  dialect: config.dialect,
+});
+/* const sequelize = new Sequelize(config.DB, config.USER, config.PASSWORD, {
   host: config.HOST,
   dialect: config.dialect,
 
@@ -11,7 +14,7 @@ const sequelize = new Sequelize(config.DB, config.USER, config.PASSWORD, {
     acquire: config.pool.acquire,
     idle: config.pool.idle,
   },
-});
+}); */
 
 const db = {};
 
