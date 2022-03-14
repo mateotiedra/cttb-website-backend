@@ -6,8 +6,21 @@ const bodyParser = require('body-parser');
 const app = express();
 
 const cors = require('cors');
+
+var whitelist = ['https://cttbernex.ch', 'http://cttbernex.ch/'];
+
+if (!process.env.PRODUCTION === 'false') {
+  whitelist.push('http://localhost:3000');
+}
+
 var corsOptions = {
-  origin: process.env.APP_ORIGIN,
+  origin: function (origin, callback) {
+    if (whitelist.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   methods: ['GET', 'POST', 'DELETE'],
   credentials: true,
 };
