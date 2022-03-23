@@ -14,9 +14,12 @@ var whitelist = [
   'http://www.cttbernex.ch',
 ];
 
-if (!process.env.PRODUCTION === 'false') {
+if (process.env.PRODUCTION === 'false') {
   whitelist.push('http://localhost:3000');
+  whitelist.push('https://localhost:3000');
 }
+
+console.log(whitelist);
 
 var corsOptions = {
   origin: function (origin, callback) {
