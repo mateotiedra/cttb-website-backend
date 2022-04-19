@@ -75,5 +75,5 @@ module.exports = function (app) {
   );
 
   // Get the user's basics infos
-  app.get('/u', [verifyAccessToken], controller.getUserBoard);
+  app.get('/auth/u', [verifyAccessToken], controller.getUserBoard);
 };
