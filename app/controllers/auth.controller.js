@@ -131,8 +131,6 @@ const getUserBoard = (req, res) => {
     userData[attribute] = req.user[attribute];
   });
 
-  console.log(userData);
-
   return res.status(200).json(userData);
 };
 
