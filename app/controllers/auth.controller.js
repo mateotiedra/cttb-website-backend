@@ -124,7 +124,16 @@ const recover = (req, res) => {
 };
 
 const getUserBoard = (req, res) => {
-  return res.status(200).json({ email: req.user.email });
+  const attributesToSend = ['email', 'status', 'role'];
+  let userData = {};
+
+  attributesToSend.forEach((attribute) => {
+    userData[attribute] = req.user[attribute];
+  });
+
+  console.log(userData);
+
+  return res.status(200).json(userData);
 };
 
 module.exports = {
