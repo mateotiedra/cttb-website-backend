@@ -63,7 +63,7 @@ const signIn = (req, res) => {
             return res.status(202).json({ message: 'Mail not confirmed yet' });
 
           return res.status(200).json({
-            accessToken: jwt.sign({ uuid: user.uuid }, config.secret),
+            accessToken: jwt.sign({ uuid: user.uuid }, config.SECRET),
           });
         }
         return res.status(403).json({
