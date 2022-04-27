@@ -16,7 +16,7 @@ var whitelist = [
 
 var corsOptions = {
   origin: function (origin, callback) {
-    if (whitelist.indexOf(origin) !== -1 || config.PRODUCTION) {
+    if (whitelist.indexOf(origin) !== -1 || !config.PRODUCTION) {
       callback(null, true);
     } else {
       callback(new Error('Not allowed by CORS'));
