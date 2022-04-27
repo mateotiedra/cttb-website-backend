@@ -1,4 +1,4 @@
-require('dotenv').config();
+const config = require('./app/config/server.config.js');
 
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -14,16 +14,9 @@ var whitelist = [
   'http://www.cttbernex.ch',
 ];
 
-if (process.env.PRODUCTION === 'false') {
-  whitelist.push('http://localhost:3000');
-  whitelist.push('https://localhost:3000');
-}
-
-console.log(whitelist);
-
 var corsOptions = {
   origin: function (origin, callback) {
-    if (whitelist.indexOf(origin) !== -1) {
+    if (whitelist.indexOf(origin) !== -1 || config.PRODUCTION) {
       callback(null, true);
     } else {
       callback(new Error('Not allowed by CORS'));
@@ -77,7 +70,7 @@ require('./app/routes/auth.routes')(app);
 require('./app/routes/event.routes')(app);
 
 // set port, listen for requests
-const PORT = process.env.PORT || 8080;
+const PORT = config.PORT || 8080;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);
 });
