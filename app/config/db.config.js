@@ -2,8 +2,8 @@ require('dotenv').config();
 
 module.exports = {
   DB_CONNECTION_URL: process.env.DB_CONNECTION_URL,
-  dialect: 'mysql',
-  pool: {
+  DIALECT: 'mysql',
+  POOL: {
     max: 5,
     min: 0,
     acquire: 30000,
