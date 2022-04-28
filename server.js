@@ -1,4 +1,4 @@
-require('dotenv').config();
+const config = require('./app/config/server.config.js');
 
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -14,19 +14,14 @@ var whitelist = [
   'http://www.cttbernex.ch',
 ];
 
-if (!process.env.PRODUCTION === 'false') {
-  whitelist.push('http://localhost:3000');
-}
-
 var corsOptions = {
   origin: function (origin, callback) {
-    if (whitelist.indexOf(origin) !== -1) {
+    if (whitelist.indexOf(origin) !== -1 || !config.PRODUCTION) {
       callback(null, true);
     } else {
       callback(new Error('Not allowed by CORS'));
     }
   },
-  methods: ['GET', 'POST', 'DELETE'],
   credentials: true,
 };
 
@@ -52,6 +47,14 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // parse requests of content-type - application/json
 app.use(express.json());
 
+app.use(function (req, res, next) {
+  res.header(
+    'Access-Control-Allow-Headers',
+    'x-access-token, Origin, Content-Type, Accept'
+  );
+  next();
+});
+
 // Database
 const db = require('./app/models/db.model');
 
@@ -71,10 +74,11 @@ app.get('/', (req, res) => {
 
 // routes
 require('./app/routes/auth.routes')(app);
+require('./app/routes/user.routes')(app);
 require('./app/routes/event.routes')(app);
 
 // set port, listen for requests
-const PORT = process.env.PORT || 8080;
+const PORT = config.PORT || 8080;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);
 });
