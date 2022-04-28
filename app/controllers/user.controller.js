@@ -22,7 +22,7 @@ const filterUserAttributes = (user) => {
   let userSafeData = {};
 
   attributesToSend.forEach((attribute) => {
-    userSafeData[attribute] = user[attribute];
+    userSafeData[attribute] = user.dataValues[attribute];
   });
 
   return userSafeData;
@@ -41,7 +41,18 @@ const getEveryUserBoard = (req, res) => {
     .catch(unexpectedErrorCatch(res));
 };
 
+const updateUserRole = (req, res) => {
+  req.user.role = req.body.newRole;
+  req.user
+    .save()
+    .then(() => {
+      res.status(200).json(filterUserAttributes(req.user));
+    })
+    .catch(unexpectedErrorCatch(res));
+};
+
 module.exports = {
   getUserBoard,
   getEveryUserBoard,
+  updateUserRole,
 };

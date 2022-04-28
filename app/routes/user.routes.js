@@ -4,6 +4,7 @@ const {
 } = require('../middlewares/user.middleware');
 const { verifyRequestBody } = require('../middlewares/request.middleware');
 const controller = require('../controllers/user.controller');
+const { findUserByAttribute } = require('../middlewares/finders.middleware');
 
 module.exports = function (app) {
   // Get the user's basics infos
@@ -14,5 +15,17 @@ module.exports = function (app) {
     '/user/all',
     [verifyAccessToken, verifyRole(['admin'])],
     controller.getEveryUserBoard
+  );
+
+  // Change the user role
+  app.put(
+    '/user/update/role',
+    [
+      verifyRequestBody(['userEmail', 'newRole']),
+      verifyAccessToken,
+      verifyRole(['admin']),
+      findUserByAttribute('email', 'userEmail'),
+    ],
+    controller.updateUserRole
   );
 };
