@@ -23,7 +23,7 @@ module.exports = function (app) {
     [
       verifyRequestBody(['userEmail', 'newRole']),
       verifyAccessToken,
-      verifyRole(['mod', 'admin']),
+      verifyRole(['admin']),
       findUserByAttribute('email', 'userEmail'),
     ],
     controller.updateUserRole
