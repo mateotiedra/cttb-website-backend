@@ -14,6 +14,7 @@ var whitelist = [
   'http://www.cttbernex.ch',
 ];
 
+// Cors options
 var corsOptions = {
   origin: function (origin, callback) {
     if (whitelist.indexOf(origin) !== -1 || !config.PRODUCTION) {
@@ -22,6 +23,7 @@ var corsOptions = {
       callback(new Error('Not allowed by CORS'));
     }
   },
+  methods: ['GET', 'POST', 'DELETE', 'PUT'],
   credentials: true,
 };
 
