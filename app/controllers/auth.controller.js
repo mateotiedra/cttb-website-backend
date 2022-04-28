@@ -109,7 +109,7 @@ const confirmEmail = (req, res) => {
     .save()
     .then(() => {
       res.status(200).json({
-        accessToken: jwt.sign({ uuid: user.uuid }, config.secret),
+        accessToken: jwt.sign({ uuid: user.uuid }, config.SECRET),
       });
     })
     .catch(unexpectedErrorCatch(res));
@@ -119,7 +119,7 @@ const confirmEmail = (req, res) => {
 const recover = (req, res) => {
   const user = req.user;
   res.status(200).json({
-    accessToken: jwt.sign({ uuid: user.uuid }, config.secret),
+    accessToken: jwt.sign({ uuid: user.uuid }, config.SECRET),
   });
 };
 
