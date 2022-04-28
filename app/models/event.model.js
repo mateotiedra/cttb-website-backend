@@ -14,9 +14,9 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.BOOLEAN,
       defaultValue: false,
     },
-    description: DataTypes.TEXT,
+    description: DataTypes.STRING,
     pdf: DataTypes.BLOB,
-    confirmationMessage: DataTypes.TEXT,
+    confirmationMessage: DataTypes.STRING,
     notifiedEmail: DataTypes.STRING,
   };
 

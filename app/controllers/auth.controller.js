@@ -63,7 +63,7 @@ const signIn = (req, res) => {
             return res.status(202).json({ message: 'Mail not confirmed yet' });
 
           return res.status(200).json({
-            accessToken: jwt.sign({ uuid: user.uuid }, config.SECRET),
+            accessToken: jwt.sign({ uuid: user.uuid }, config.secret),
           });
         }
         return res.status(403).json({
@@ -109,7 +109,7 @@ const confirmEmail = (req, res) => {
     .save()
     .then(() => {
       res.status(200).json({
-        accessToken: jwt.sign({ uuid: user.uuid }, config.SECRET),
+        accessToken: jwt.sign({ uuid: user.uuid }, config.secret),
       });
     })
     .catch(unexpectedErrorCatch(res));
@@ -119,8 +119,12 @@ const confirmEmail = (req, res) => {
 const recover = (req, res) => {
   const user = req.user;
   res.status(200).json({
-    accessToken: jwt.sign({ uuid: user.uuid }, config.SECRET),
+    accessToken: jwt.sign({ uuid: user.uuid }, config.secret),
   });
+};
+
+const getUserBoard = (req, res) => {
+  return res.status(200).json({ email: req.user.email });
 };
 
 module.exports = {
@@ -130,4 +134,5 @@ module.exports = {
   resetPassword: sendEmailToken('reset'),
   confirmEmail,
   recover,
+  getUserBoard,
 };
