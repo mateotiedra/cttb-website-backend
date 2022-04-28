@@ -20,7 +20,7 @@ var corsOptions = {
     if (whitelist.indexOf(origin) !== -1 || !config.PRODUCTION) {
       callback(null, true);
     } else {
-      callback(new Error('Not allowed by CORS'));
+      callback(new Error('Not allowed by CORS, origin not in the list'));
     }
   },
   methods: ['GET', 'POST', 'DELETE', 'PUT'],
@@ -49,14 +49,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // parse requests of content-type - application/json
 app.use(express.json());
 
-app.use(function (req, res, next) {
-  res.header(
-    'Access-Control-Allow-Headers',
-    'x-access-token, Origin, Content-Type, Accept'
-  );
-  next();
-});
-
 // Database
 const db = require('./app/models/db.model');
 
@@ -72,6 +64,14 @@ db.sequelize.sync({ force: resetDB }).then(() => {
 // simple route
 app.get('/', (req, res) => {
   res.json({ message: 'Welcome to the api.' });
+});
+
+app.use(function (req, res, next) {
+  res.header(
+    'Access-Control-Allow-Headers',
+    'x-access-token, Origin, Content-Type, Accept'
+  );
+  next();
 });
 
 // routes
