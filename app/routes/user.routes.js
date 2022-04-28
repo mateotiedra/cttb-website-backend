@@ -13,7 +13,7 @@ module.exports = function (app) {
   // Get all the users
   app.get(
     '/user/all',
-    [verifyAccessToken, verifyRole(['admin'])],
+    [verifyAccessToken, verifyRole(['mod', 'admin'])],
     controller.getEveryUserBoard
   );
 
