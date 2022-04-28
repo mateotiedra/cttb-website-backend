@@ -22,7 +22,6 @@ var corsOptions = {
       callback(new Error('Not allowed by CORS'));
     }
   },
-  methods: ['GET', 'POST', 'DELETE'],
   credentials: true,
 };
 
