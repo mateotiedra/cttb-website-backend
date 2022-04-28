@@ -1,6 +1,5 @@
 const {
   validEmailToken,
-  verifyAccessToken,
   verifyStatus,
 } = require('../middlewares/user.middleware');
 const { verifyRequestBody } = require('../middlewares/request.middleware');
@@ -8,14 +7,6 @@ const controller = require('../controllers/auth.controller');
 const { findUserByAttribute } = require('../middlewares/finders.middleware');
 
 module.exports = function (app) {
-  app.use(function (req, res, next) {
-    res.header(
-      'Access-Control-Allow-Headers',
-      'x-access-token, Origin, Content-Type, Accept'
-    );
-    next();
-  });
-
   // Register a new user
   app.post(
     '/auth/signup',
@@ -73,7 +64,4 @@ module.exports = function (app) {
     [verifyRequestBody(['password', 'email'])],
     controller.signIn
   );
-
-  // Get the user's basics infos
-  app.get('/u', [verifyAccessToken], controller.getUserBoard);
 };
