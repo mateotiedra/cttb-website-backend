@@ -123,17 +123,6 @@ const recover = (req, res) => {
   });
 };
 
-const getUserBoard = (req, res) => {
-  const attributesToSend = ['email', 'status', 'role'];
-  let userData = {};
-
-  attributesToSend.forEach((attribute) => {
-    userData[attribute] = req.user[attribute];
-  });
-
-  return res.status(200).json(userData);
-};
-
 module.exports = {
   signUp,
   resendConfirmation: sendEmailToken('confirmation'),
@@ -141,5 +130,4 @@ module.exports = {
   resetPassword: sendEmailToken('reset'),
   confirmEmail,
   recover,
-  getUserBoard,
 };

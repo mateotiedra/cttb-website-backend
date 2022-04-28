@@ -48,6 +48,14 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // parse requests of content-type - application/json
 app.use(express.json());
 
+app.use(function (req, res, next) {
+  res.header(
+    'Access-Control-Allow-Headers',
+    'x-access-token, Origin, Content-Type, Accept'
+  );
+  next();
+});
+
 // Database
 const db = require('./app/models/db.model');
 
@@ -67,6 +75,7 @@ app.get('/', (req, res) => {
 
 // routes
 require('./app/routes/auth.routes')(app);
+require('./app/routes/user.routes')(app);
 require('./app/routes/event.routes')(app);
 
 // set port, listen for requests
