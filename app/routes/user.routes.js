@@ -28,4 +28,16 @@ module.exports = function (app) {
     ],
     controller.updateUserRole
   );
+
+  // Delete a user account
+  app.delete(
+    '/user',
+    [
+      verifyRequestBody(['userEmail']),
+      verifyAccessToken,
+      verifyRole(['admin']),
+      findUserByAttribute('email', 'userEmail'),
+    ],
+    controller.deleteUser
+  );
 };
