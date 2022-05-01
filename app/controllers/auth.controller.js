@@ -29,6 +29,8 @@ const signUp = (req, res) => {
         password: password,
         emailToken: emailToken,
         emailTokenGeneratedAt: Date.now(),
+        // Remove when mail confirmation wanted
+        status: 'active',
       })
         .then((user) => {
           mailController
@@ -59,7 +61,7 @@ const signIn = (req, res) => {
       if (!user) return objectNotFoundRes(res);
       return bcrypt.compare(req.body.password, user.password, (err, same) => {
         if (same) {
-          if (user.status != 'active')
+          if (user.status !== 'active')
             return res.status(202).json({ message: 'Mail not confirmed yet' });
 
           return res.status(200).json({
