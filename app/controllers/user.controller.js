@@ -51,8 +51,18 @@ const updateUserRole = (req, res) => {
     .catch(unexpectedErrorCatch(res));
 };
 
+const deleteUser = (req, res) => {
+  req.user
+    .destroy()
+    .then(() => {
+      res.status(204).json({ message: 'The user has been deleted' });
+    })
+    .catch(unexpectedErrorCatch(res));
+};
+
 module.exports = {
   getUserBoard,
   getEveryUserBoard,
   updateUserRole,
+  deleteUser,
 };
