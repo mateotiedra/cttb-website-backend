@@ -78,6 +78,7 @@ app.use(function (req, res, next) {
 require('./app/routes/auth.routes')(app);
 require('./app/routes/user.routes')(app);
 require('./app/routes/event.routes')(app);
+require('./app/routes/news.routes')(app);
 
 // set port, listen for requests
 const PORT = config.PORT;

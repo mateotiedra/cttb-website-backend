@@ -25,6 +25,7 @@ db.Op = Sequelize.Op;
 db.user = require('./user.model.js')(sequelize, Sequelize);
 db.event = require('./event.model.js')(sequelize, Sequelize);
 db.registration = require('./registration.model.js')(sequelize, Sequelize);
+db.news = require('./news.model.js')(sequelize, Sequelize);
 
 db.event.associate(db);
 db.registration.associate(db);
