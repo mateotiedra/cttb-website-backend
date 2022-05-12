@@ -27,15 +27,17 @@ const getNewsBoard = (req, res) => {
   return res.status(200).json(req.news.dataValues);
 };
 
-/* const getEveryNewsBoard = (req, res) => {
-  User.findAll({ attributes: { exclude: blackListAttributes } })
-    .then((users) => {
-      res.status(200).json(users);
+const getEveryNewsBoard = (req, res) => {
+  const limit = req.prams.limit || 14;
+  News.findAll({ limit: limit, order: [['updatedAt', 'DESC']] })
+    .then((news) => {
+      res.status(200).json(news);
     })
     .catch(unexpectedErrorCatch(res));
-}; */
+};
 
 module.exports = {
   newNews,
   getNewsBoard,
+  getEveryNewsBoard,
 };

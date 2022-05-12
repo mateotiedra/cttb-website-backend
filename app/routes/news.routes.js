@@ -25,9 +25,5 @@ module.exports = function (app) {
   app.get('/news', [findNewsByAttribute('id')], controller.getNewsBoard);
 
   // Get all the news
-  /* app.get(
-    '/news/all',
-    [verifyAccessToken, verifyRole(['mod', 'admin'])],
-    controller.getEveryNewsBoard
-  ); */
+  app.get('/news/all', controller.getEveryNewsBoard);
 };
