@@ -24,6 +24,7 @@ const newNews = (req, res) => {
 };
 
 const getNewsBoard = (req, res) => {
+  req.news.dataValues.links = JSON.parse(req.news.dataValues.links);
   return res.status(200).json(req.news.dataValues);
 };
 
@@ -48,9 +49,19 @@ const updateNews = (req, res) => {
     .catch(unexpectedErrorCatch(res));
 };
 
+const deleteNews = (req, res) => {
+  req.news
+    .destroy()
+    .then(() => {
+      res.status(204).json({ message: 'The news has been deleted' });
+    })
+    .catch(unexpectedErrorCatch(res));
+};
+
 module.exports = {
   newNews,
   getNewsBoard,
   getEveryNewsBoard,
   updateNews,
+  deleteNews,
 };

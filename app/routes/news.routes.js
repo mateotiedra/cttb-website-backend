@@ -29,4 +29,7 @@ module.exports = function (app) {
 
   // Update the news
   app.put('/news', [findNewsByAttribute('id')], controller.updateNews);
+
+  // Delete the news
+  app.delete('/news', [findNewsByAttribute('id')], controller.deleteNews);
 };

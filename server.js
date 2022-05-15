@@ -37,7 +37,8 @@ const limiter = rateLimit({
   standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
   legacyHeaders: false, // Disable the `X-RateLimit-*` headers
 });
-app.use(limiter);
+
+if (config.PRODUCTION) app.use(limiter);
 
 // Use helmet for security
 const helmet = require('helmet');
