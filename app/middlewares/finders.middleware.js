@@ -21,7 +21,7 @@ const findObjectByAttribute =
     if (
       (!attributeInQueryParams &&
         verifyRequestBody([reqAttribute])(req, res, () => {})) ||
-      (attributeInQueryParams === 'GET' &&
+      (attributeInQueryParams &&
         verifyQueryParams([reqAttribute])(req, res, () => {}))
     ) {
       return;
