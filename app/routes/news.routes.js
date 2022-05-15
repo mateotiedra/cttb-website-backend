@@ -26,4 +26,7 @@ module.exports = function (app) {
 
   // Get all the news
   app.get('/news/all', controller.getEveryNewsBoard);
+
+  // Update the news
+  app.put('/news', [findNewsByAttribute('id')], controller.updateNews);
 };

@@ -18,7 +18,7 @@ const newNews = (req, res) => {
     links: req.body.links,
   })
     .then(() => {
-      res.status(200).json({ message: 'News created' });
+      res.status(200).json({ message: 'News created', id: id });
     })
     .catch(uniqueAttributeErrorCatch(res, unexpectedErrorCatch));
 };
@@ -36,8 +36,21 @@ const getEveryNewsBoard = (req, res) => {
     .catch(unexpectedErrorCatch(res));
 };
 
+const updateNews = (req, res) => {
+  ['title', 'description', 'links'].forEach((attr) => {
+    if (req.body[attr]) req.news[attr] = req.body[attr];
+  });
+  req.news
+    .save()
+    .then(() => {
+      res.status(200).json(req.news);
+    })
+    .catch(unexpectedErrorCatch(res));
+};
+
 module.exports = {
   newNews,
   getNewsBoard,
   getEveryNewsBoard,
+  updateNews,
 };
