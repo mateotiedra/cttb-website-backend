@@ -24,7 +24,14 @@ const newNews = (req, res) => {
 };
 
 const getNewsBoard = (req, res) => {
-  req.news.dataValues.links = JSON.parse(req.news.dataValues.links);
+  let fetchedLinks = req.news.dataValues.links;
+  try {
+    // Parse a JSON
+    fetchedLinks = JSON.parse(fetchedLinks);
+  } catch (e) {
+    console.log(fetchedLinks, e);
+  }
+  req.news.dataValues.links = fetchedLinks;
   return res.status(200).json(req.news.dataValues);
 };
 
