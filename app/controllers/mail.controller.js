@@ -6,7 +6,7 @@ const user = config.USER;
 const transport = nodemailer.createTransport({
   host: config.HOST,
   secure: false,
-  port: 587,
+  port: config.PORT,
   direct: true,
   auth: {
     user: user,
