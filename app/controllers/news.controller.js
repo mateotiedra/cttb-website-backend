@@ -37,7 +37,7 @@ const getNewsBoard = (req, res) => {
 
 const getEveryNewsBoard = (req, res) => {
   const limit = req.query && req.query.limit ? parseInt(req.query.limit) : 14;
-  News.findAll({ limit: limit, order: [['updatedAt', 'DESC']] })
+  News.findAll({ limit: limit, order: [['createdAt', 'DESC']] })
     .then((news) => {
       res.status(200).json(news);
     })
